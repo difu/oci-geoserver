@@ -140,12 +140,10 @@ variable "user-data" {
   default = <<EOF
 #!/bin/bash -x
 echo '################### Geoserver userdata begins #####################'
-systemctl disable  firewalld
-systemctl stop  firewalld
 touch ~opc/userdata.`date +%s`.finish
 
 export GEOSERVER_HOME=/opt/geoserver
-su geoserver /opt/geoserver/bin/startup.sh
+su nohup geoserver /opt/geoserver/bin/startup.sh &
 
 echo '################### Geoserver userdata ends #######################'
 EOF
