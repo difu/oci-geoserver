@@ -142,8 +142,7 @@ variable "user-data" {
 echo '################### Geoserver userdata begins #####################'
 touch ~opc/userdata.`date +%s`.finish
 
-export GEOSERVER_HOME=/opt/geoserver
-su nohup geoserver /opt/geoserver/bin/startup.sh &
+su geoserver -c "export GEOSERVER_HOME=/opt/geoserver;nohup /bin/sh /opt/geoserver/bin/startup.sh >/home/geoserver/geoserver.log 2>&1 &"
 
 echo '################### Geoserver userdata ends #######################'
 EOF
