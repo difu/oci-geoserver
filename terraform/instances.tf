@@ -49,7 +49,7 @@ resource "oci_core_instance_configuration" "instance_configuration_geoserver" {
         network_type            = "PARAVIRTUALIZED"
         remote_data_volume_type = ""
       }
-
+      freeform_tags = {"instance"= "geoserver"}
     }
   }
 }
