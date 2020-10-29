@@ -102,6 +102,10 @@ variable "public_ssh_sl_source" {
   default = "0.0.0.0/0"
 }
 
+variable "public_geoserver_sl_source" {
+  default = "0.0.0.0/0"
+}
+
 variable "public_http_sl_source" {
   default = "0.0.0.0/0"
 }
@@ -126,6 +130,9 @@ variable "public_sl_http_tcp_port" {
   default = "8080"
 }
 
+variable "public_geoserver_port" {
+  default = "8080"
+}
 
 variable "instance_configuration_name_geoserever" {
   default = "GeoServerInstanceConfiguration"

@@ -140,6 +140,19 @@ resource "oci_core_security_list" "public_security_list" {
       max = var.public_sl_ssh_tcp_port
     }
   }
+    // allow inbound Geoserver traffic from a specific port
+  ingress_security_rules {
+    protocol  = var.tcp_protocol         // tcp = 6
+    source    = var.public_geoserver_sl_source
+    stateless = var.rule_stateless
+
+    tcp_options {
+      // These values correspond to the destination port range.
+      min = var.public_geoserver_port
+      max = var.public_geoserver_port
+    }
+  }
+
   ingress_security_rules {
     protocol  = var.tcp_protocol          // tcp = 6
     source    = var.public_http_sl_source // Can be restricted for specific IP address
