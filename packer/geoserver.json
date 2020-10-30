@@ -45,7 +45,8 @@
         "sudo cp /tmp/ojdbc8-full/osdt_cert.jar /tmp/ojdbc8-full/osdt_core.jar /tmp/ojdbc8-full/oraclepki.jar /opt/geoserver/webapps/geoserver/WEB-INF/lib/",
         "sudo cp /tmp/ojdbc8-full/osdt_cert.jar /tmp/ojdbc8-full/osdt_core.jar /tmp/ojdbc8-full/oraclepki.jar /opt/geoserver/lib/",
         "sudo useradd geoserver",
-        "sudo chown -R geoserver /opt/geoserver"
+        "sudo chown -R geoserver /opt/geoserver",
+        "sudo su geoserver -c \"mkdir -p /home/geoserver/network/admin\""
       ]
     }
   ]
