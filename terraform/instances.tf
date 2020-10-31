@@ -165,7 +165,7 @@ data "oci_core_images" "oraclelinux" {
 data "oci_core_images" "geoserver_image" {
   compartment_id = var.compartment_ocid
 
-  display_name = "Geoserver"
+  display_name = var.geoserver_image
 
 //  filter {
 //

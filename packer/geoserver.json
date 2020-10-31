@@ -15,7 +15,7 @@
       "availability_domain": "{{user `availability_domain`}}",
       "base_image_ocid": "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaaslbcss5egtogdhf2m7yryjdz4nlkjbznhahg4s7dzcryhlqfkg5a",
       "compartment_ocid": "{{user `compartment_ocid`}}",
-      "image_name": "Geoserver",
+      "image_name": "Geoserver_2.18.0",
       "shape": "VM.Standard.E2.1.Micro",
       "ssh_username": "opc",
       "subnet_ocid": "{{user `subnet_ocid`}}",

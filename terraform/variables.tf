@@ -150,6 +150,10 @@ variable "instance_configuration_vnic_details_geoserver_name" {
   default = "GeoServerInstance"
 }
 
+variable "geoserver_image" {
+
+}
+
 variable "instance_configuration_vcnic_skip_source_dest_check" {
   default = false
 }
