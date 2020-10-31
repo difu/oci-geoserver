@@ -142,7 +142,7 @@ variable "user-data" {
 echo '################### Geoserver userdata begins #####################'
 touch ~opc/userdata.`date +%s`.finish
 
-su geoserver -c "export JAVA_OPTS=-Doracle.net.tns_admin=/home/geoserver/network/admin;export GEOSERVER_HOME=/opt/geoserver;nohup /bin/sh /opt/geoserver/bin/startup.sh >/home/geoserver/geoserver.log 2>&1 &"
+su geoserver -c "export JAVA_OPTS=\"-Doracle.net.tns_admin=/home/geoserver/network/admin -Ds3.properties.location=/home/geoserver/s3/s3.properties\";export GEOSERVER_HOME=/opt/geoserver;nohup /bin/sh /opt/geoserver/bin/startup.sh >/home/geoserver/geoserver.log 2>&1 &"
 
 echo '################### Geoserver userdata ends #######################'
 EOF
