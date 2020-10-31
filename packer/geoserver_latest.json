@@ -1,0 +1,55 @@
+{
+  "variables": {
+    "availability_domain": "{{env `PACKER_VAR_availability_domain`}}",
+    "compartment_ocid": "{{env `PACKER_VAR_compartment_ocid`}}",
+    "fingerprint": "{{env `PACKER_VAR_fingerprint`}}",
+    "key_file": "{{env `PACKER_VAR_private_key_path`}}",
+    "region": "{{env `PACKER_VAR_region`}}",
+    "subnet_ocid": "{{env `PACKER_VAR_subnet_ocid`}}",
+    "tenancy_ocid": "{{env `PACKER_VAR_tenancy_ocid`}}",
+    "user_ocid": "{{env `PACKER_VAR_user_ocid`}}"
+  },
+  "builders": [
+    {
+      "region": "{{user `region`}}",
+      "availability_domain": "{{user `availability_domain`}}",
+      "base_image_ocid": "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaaslbcss5egtogdhf2m7yryjdz4nlkjbznhahg4s7dzcryhlqfkg5a",
+      "compartment_ocid": "{{user `compartment_ocid`}}",
+      "image_name": "Geoserver_latest",
+      "shape": "VM.Standard.E2.1.Micro",
+      "ssh_username": "opc",
+      "subnet_ocid": "{{user `subnet_ocid`}}",
+      "type": "oracle-oci",
+      "user_ocid": "{{user `user_ocid`}}",
+      "tenancy_ocid": "{{user `tenancy_ocid`}}",
+      "fingerprint": "{{user `fingerprint`}}",
+      "key_file": "{{user `key_file`}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo systemctl disable firewalld",
+        "sudo systemctl stop firewalld",
+        "sudo yum -y install java",
+        "wget --output-document=\"/tmp/geoserver.zip\" \"https://build.geoserver.org/geoserver/master/geoserver-master-latest-bin.zip\"",
+        "sudo mkdir -p /opt/geoserver",
+        "sudo unzip /tmp/geoserver.zip -d /opt/geoserver",
+
+        "mkdir /tmp/geoserver_oracle",
+        "wget --output-document=\"/tmp/geoserver-oracle-plugin.zip\" \"https://build.geoserver.org/geoserver/master/ext-latest/geoserver-2.19-SNAPSHOT-oracle-plugin.zip\"",
+        "unzip /tmp/geoserver-oracle-plugin.zip -d /tmp/geoserver_oracle/",
+        "sudo cp /tmp/geoserver_oracle/*.jar /opt/geoserver/webapps/geoserver/WEB-INF/lib/",
+
+        "wget --output-document=\"/tmp/ojdbc8-full.tar.gz\" \"https://download.oracle.com/otn-pub/otn_software/jdbc/198/ojdbc8-full.tar.gz\"",
+        "tar -xf /tmp/ojdbc8-full.tar.gz -C /tmp/",
+        "sudo cp /tmp/ojdbc8-full/osdt_cert.jar /tmp/ojdbc8-full/osdt_core.jar /tmp/ojdbc8-full/oraclepki.jar /opt/geoserver/webapps/geoserver/WEB-INF/lib/",
+        "sudo cp /tmp/ojdbc8-full/osdt_cert.jar /tmp/ojdbc8-full/osdt_core.jar /tmp/ojdbc8-full/oraclepki.jar /opt/geoserver/lib/",
+        "sudo useradd geoserver",
+        "sudo chown -R geoserver /opt/geoserver",
+        "sudo su geoserver -c \"mkdir -p /home/geoserver/network/admin\""
+      ]
+    }
+  ]
+}
