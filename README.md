@@ -1,11 +1,34 @@
 # oci-geoserver
 Testbed to run GeoServer on Oracle Cloud Infrastructure
 
-## Build image
+## Prepare Database
 
-To build the GeoServer image, set all environment variables that start with ```PACKER_VAR_``` and run in the ```packer``` directory: 
+- Run with your admin user ```create_user-sql``` script. Change password!
+- Log in with user **geoserver** anr run ```create_data.sql``` to install a simple test layer.
+
+## Build images
+
+To build the GeoServer images, set all environment variables that start with ```PACKER_VAR_``` and run in the ```packer``` directory: 
 ```
-packer build geoserver.json
+packer build geoserver_latest.json
+packer build geoserver_2.18.0
 ```
+
+## Terraform
+
+Set all needed environment varialbles that start with ```TF_VAR```
+
+````
+terraform init
+terraform plan
+````
+
+Review the plan and apply with
+
+```
+terraform apply
+```
+
+
 
 Autoscaling code based on https://github.com/svilmune/tf-012-autoscaling-events-demo
