@@ -14,6 +14,9 @@ packer build geoserver_latest.json
 packer build geoserver_2.18.0
 ```
 
+All images contain the Oracle ojdbc8 drivers and the GeoServer Oracle plugin.
+
+
 ## Terraform
 
 Set all needed environment variables that start with ```TF_VAR```
@@ -37,7 +40,7 @@ Currently, the database connection is not automatically set up! GeoServer is sta
 
 In case you want to connect with an autonomous database service, unzip and upload the content of your wallet in this
 directory. In the GeoServer store configuration leave ```host``` and ```port``` blank and insert the description of your service
-in the database field.
+in the ```database``` field.
 
 
 Autoscaling code based on https://github.com/svilmune/tf-012-autoscaling-events-demo
