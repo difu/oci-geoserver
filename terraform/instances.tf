@@ -49,7 +49,7 @@ resource "oci_core_instance_configuration" "instance_configuration_geoserver" {
         network_type            = "PARAVIRTUALIZED"
         remote_data_volume_type = ""
       }
-      freeform_tags = {"instance"= "geoserver"}
+      freeform_tags = {"instance"= var.geoserver_instance_tag_value}
     }
   }
 }
@@ -76,6 +76,23 @@ resource "oci_core_instance_pool" "instance_pool_geoserver" {
   }
 }
 
+resource "oci_identity_dynamic_group" "geoserver_dynamic_group" {
+    compartment_id = var.tenancy_ocid
+    description = "Group that matches all geoserver instances. Group created by terraform"
+    matching_rule = "All {instance.compartment.id='${var.compartment_ocid}',tag.instance.value='${var.geoserver_instance_tag_value}'}"
+    name = "dynamic_group_geoserver"
+
+}
+
+resource "oci_identity_policy" "geoserver_policy" {
+    compartment_id = var.compartment_ocid
+    description = "Allow and deny geoserver instances access to oci resources"
+    name = "policy_geoserver"
+    statements = ["Allow dynamic-group ${oci_identity_dynamic_group.geoserver_dynamic_group.name} to manage buckets in compartment ${var.compartment_name}"]
+
+    #Optional
+    #version_date = var.policy_version_date
+}
 
 resource "oci_autoscaling_auto_scaling_configuration" "auto_scaling_configuration_geoserver" {
   compartment_id       = var.compartment_ocid

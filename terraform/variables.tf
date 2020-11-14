@@ -1,3 +1,5 @@
+variable compartment_name {}
+
 variable "lb_shape" {
   default = "10Mbps-Micro"
 }
@@ -208,6 +210,10 @@ variable "instance_pool_state" {
 
 variable "instance_pool_name_geoserver" {
   default = "geoserver_pool"
+}
+
+variable "geoserver_instance_tag_value" {
+  default = "geoserver_instance"
 }
 
 variable "instance_pool_load_balancers_port" {
