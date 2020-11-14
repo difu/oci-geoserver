@@ -33,6 +33,8 @@
         "sudo systemctl disable firewalld",
         "sudo systemctl stop firewalld",
         "sudo yum -y install java",
+        "sudo yum -y install python36-oci-cli",
+
         "wget --output-document=\"/tmp/geoserver.zip\" \"https://build.geoserver.org/geoserver/master/geoserver-master-latest-bin.zip\"",
         "sudo mkdir -p /opt/geoserver",
         "sudo unzip /tmp/geoserver.zip -d /opt/geoserver",
