@@ -32,7 +32,21 @@ Review the plan and apply with
 terraform apply
 ```
 
-## Database connection
+## Database
+
+### Store database connection details in OCI Vault
+
+1. Create a vault and encryption key
+2. Download ADB connection wallet and unzip it in a local directory
+3. Set environment
+```shell script
+export COMPARTMENT_OCID=ocid1.compartment.oc1..xxx
+export ENCRYPTION_KEY_OCID=ocid1.key.oc1.xxx
+export VAULT_ID=ocid1.vault.oc1.xxx
+```
+4. run ```scripts/createWalletSecrets.sh```
+
+### Connection
 
 Currently, the database connection is not automatically set up! GeoServer is started with
 
