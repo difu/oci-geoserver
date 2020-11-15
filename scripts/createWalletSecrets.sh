@@ -50,7 +50,7 @@ oci vault secret create-base64 --vault-id ${VAULT_ID} \
 oci vault secret create-base64 --vault-id ${VAULT_ID} \
  --compartment-id ${COMPARTMENT_OCID} \
  --key-id ${ENCRYPTION_KEY_OCID} \
- --secret-name tnsname.ora --secret-content-content "$(base64 $WALLET_PATH/tnsnames.ora)" --auth security_token
+ --secret-name tnsnames.ora --secret-content-content "$(base64 $WALLET_PATH/tnsnames.ora)" --auth security_token
 
 oci vault secret create-base64 --vault-id ${VAULT_ID} \
  --compartment-id ${COMPARTMENT_OCID} \
