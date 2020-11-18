@@ -52,6 +52,9 @@ resource "oci_core_instance_configuration" "instance_configuration_geoserver" {
       freeform_tags = {"instance"= var.geoserver_instance_tag_value}
     }
   }
+    depends_on = [
+    oci_identity_dynamic_group.geoserver_dynamic_group,
+  ]
 }
 
 
@@ -79,7 +82,8 @@ resource "oci_core_instance_pool" "instance_pool_geoserver" {
 resource "oci_identity_dynamic_group" "geoserver_dynamic_group" {
     compartment_id = var.tenancy_ocid
     description = "Group that matches all geoserver instances. Group created by terraform"
-    matching_rule = "All {instance.compartment.id='${var.compartment_ocid}',tag.instance.value='${var.geoserver_instance_tag_value}'}"
+    # matching_rule = "All {instance.compartment.id='${var.compartment_ocid}',tag.instance.value='${var.geoserver_instance_tag_value}'}"
+    matching_rule = "All {instance.compartment.id='${var.compartment_ocid}'}"
     name = "dynamic_group_geoserver"
 
 }
@@ -88,7 +92,9 @@ resource "oci_identity_policy" "geoserver_policy" {
     compartment_id = var.compartment_ocid
     description = "Allow and deny geoserver instances access to oci resources"
     name = "policy_geoserver"
-    statements = ["Allow dynamic-group ${oci_identity_dynamic_group.geoserver_dynamic_group.name} to manage buckets in compartment ${var.compartment_name}"]
+    statements = [
+      "Allow dynamic-group ${oci_identity_dynamic_group.geoserver_dynamic_group.name} to read secrets in compartment ${var.compartment_name} where target.vault.id='${var.geoserver_vault_ocid}'"
+    ]
 
     #Optional
     #version_date = var.policy_version_date

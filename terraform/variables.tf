@@ -308,3 +308,7 @@ variable "autoscaling_rules_metric_threshold_value_in" {
 variable "autoscaling_resources_type" {
   default = "instancePool"
 }
+
+variable "geoserver_vault_ocid" {
+
+}
