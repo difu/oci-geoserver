@@ -39,21 +39,24 @@ terraform apply
 1. Create a vault and encryption key
 2. Download ADB connection wallet and unzip it in a local directory
 3. Set environment
-```shell script
-export COMPARTMENT_OCID=ocid1.compartment.oc1..xxx
-export ENCRYPTION_KEY_OCID=ocid1.key.oc1.xxx
-export VAULT_ID=ocid1.vault.oc1.xxx
-```
-4. run ```scripts/createWalletSecrets.sh```
+    ```shell script
+    export COMPARTMENT_OCID=ocid1.compartment.oc1..xxx
+    export ENCRYPTION_KEY_OCID=ocid1.key.oc1.xxx
+    export VAULT_ID=ocid1.vault.oc1.xxx
+    ```
+4. Run ```scripts/createWalletSecrets.sh```
+
+    For each wallet file a secret will be generated. The idea is more precisely described in https://www.ateam-oracle.com/how-to-use-vault-to-store-atp-wallet .
 
 ### Connection
 
-Currently, the database connection is not automatically set up! GeoServer is started with
+Currently, the database connection is not completely automatically set up! GeoServer is started with
 
 ```-Doracle.net.tns_admin=/home/geoserver/network/admin```
 
-In case you want to connect with an autonomous database service, unzip and upload the content of your wallet in this
-directory. In the GeoServer store configuration leave ```host``` and ```port``` blank and insert the description of your service
+This is also the directory the wallet is deployed to.
+
+In the GeoServer store configuration leave ```host``` and ```port``` blank and insert the description of your service
 in the ```database``` field.
 
 

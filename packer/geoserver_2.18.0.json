@@ -16,7 +16,7 @@
       "base_image_ocid": "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaaslbcss5egtogdhf2m7yryjdz4nlkjbznhahg4s7dzcryhlqfkg5a",
       "compartment_ocid": "{{user `compartment_ocid`}}",
       "image_name": "Geoserver_2.18.0",
-      "shape": "VM.Standard.E2.1.Micro",
+      "shape": "VM.Standard2.1",
       "ssh_username": "opc",
       "subnet_ocid": "{{user `subnet_ocid`}}",
       "type": "oracle-oci",
@@ -34,28 +34,37 @@
         "sudo systemctl stop firewalld",
         "sudo yum -y install java",
         "sudo yum -y install python36-oci-cli",
-
         "wget --output-document=\"/tmp/geoserver.zip\" \"https://downloads.sourceforge.net/project/geoserver/GeoServer/2.18.0/geoserver-2.18.0-bin.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fgeoserver%2Ffiles%2FGeoServer%2F2.18.0%2Fgeoserver-2.18.0-bin.zip%2Fdownload&ts=1603469386\"",
         "sudo mkdir -p /opt/geoserver",
         "sudo unzip /tmp/geoserver.zip -d /opt/geoserver",
-
         "mkdir /tmp/geoserver_oracle",
         "wget --output-document=\"/tmp/geoserver-2.18.0-oracle-plugin.zip\" \"https://downloads.sourceforge.net/project/geoserver/GeoServer/2.18.0/extensions/geoserver-2.18.0-oracle-plugin.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fgeoserver%2Ffiles%2FGeoServer%2F2.18.0%2Fextensions%2Fgeoserver-2.18.0-oracle-plugin.zip%2Fdownload\"",
         "unzip /tmp/geoserver-2.18.0-oracle-plugin.zip -d /tmp/geoserver_oracle/",
         "sudo cp /tmp/geoserver_oracle/*.jar /opt/geoserver/webapps/geoserver/WEB-INF/lib/",
-
         "mkdir /tmp/geoserver_s3-geotiff-plugin",
         "wget --output-document=\"/tmp/geoserver-2.18.0-s3-geotiff-plugin.zip\" \"https://build.geoserver.org/geoserver/2.18.x/community-latest/geoserver-2.18-SNAPSHOT-s3-geotiff-plugin.zip\"",
         "unzip /tmp/geoserver-2.18.0-s3-geotiff-plugin.zip -d /tmp/geoserver_s3-geotiff-plugin/",
         "sudo cp /tmp/geoserver_s3-geotiff-plugin/*.jar /opt/geoserver/webapps/geoserver/WEB-INF/lib/",
-
         "wget --output-document=\"/tmp/ojdbc8-full.tar.gz\" \"https://download.oracle.com/otn-pub/otn_software/jdbc/198/ojdbc8-full.tar.gz\"",
         "tar -xf /tmp/ojdbc8-full.tar.gz -C /tmp/",
         "sudo cp /tmp/ojdbc8-full/osdt_cert.jar /tmp/ojdbc8-full/osdt_core.jar /tmp/ojdbc8-full/oraclepki.jar /opt/geoserver/webapps/geoserver/WEB-INF/lib/",
         "sudo cp /tmp/ojdbc8-full/osdt_cert.jar /tmp/ojdbc8-full/osdt_core.jar /tmp/ojdbc8-full/oraclepki.jar /opt/geoserver/lib/",
         "sudo useradd geoserver",
-        "sudo chown -R geoserver /opt/geoserver",
         "sudo su geoserver -c \"mkdir -p /home/geoserver/network/admin\""
+      ]
+    },
+    {
+      "type": "file",
+      "destination": "/tmp",
+      "source": "./wallet"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mv /tmp/wallet/* /home/geoserver/network/admin/",
+        "sudo chown -R geoserver:geoserver /opt/geoserver",
+        "sudo chown -R geoserver:geoserver /home/geoserver",
+        "sudo chmod o-r /home/geoserver/network/admin/*"
       ]
     }
   ]
