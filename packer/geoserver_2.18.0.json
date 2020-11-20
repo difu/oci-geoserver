@@ -7,7 +7,8 @@
     "region": "{{env `PACKER_VAR_region`}}",
     "subnet_ocid": "{{env `PACKER_VAR_subnet_ocid`}}",
     "tenancy_ocid": "{{env `PACKER_VAR_tenancy_ocid`}}",
-    "user_ocid": "{{env `PACKER_VAR_user_ocid`}}"
+    "user_ocid": "{{env `PACKER_VAR_user_ocid`}}",
+    "geoserver_data_dir": "{{env `PACKER_VAR_geoserver_data_dir`}}"
   },
   "builders": [
     {
@@ -59,12 +60,25 @@
       "source": "./wallet"
     },
     {
+      "type": "file",
+      "destination": "/tmp",
+      "source": "{{user `geoserver_data_dir`}}"
+    },
+    {
       "type": "shell",
       "inline": [
+        "sudo rm -rf /opt/geoserver/data_dir",
+        "sudo mv /tmp/data_dir /opt/geoserver",
         "sudo mv /tmp/wallet/* /home/geoserver/network/admin/",
         "sudo chown -R geoserver:geoserver /opt/geoserver",
         "sudo chown -R geoserver:geoserver /home/geoserver",
-        "sudo chmod o-r /home/geoserver/network/admin/*"
+        "sudo chmod o-r /home/geoserver/network/admin/cwallet.sso",
+        "sudo chmod o-r /home/geoserver/network/admin/ewallet.p12",
+        "sudo chmod o-r /home/geoserver/network/admin/keystore.jks",
+        "sudo chmod o-r /home/geoserver/network/admin/ojdbc.properties",
+        "sudo chmod o-r /home/geoserver/network/admin/sqlnet.ora",
+        "sudo chmod o-r /home/geoserver/network/admin/tnsnames.ora",
+        "sudo chmod o-r /home/geoserver/network/admin/truststore.jks"
       ]
     }
   ]

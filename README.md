@@ -15,6 +15,9 @@ packer build geoserver_2.18.0
 ```
 
 All images contain the Oracle ojdbc8 drivers and the GeoServer Oracle plugin.
+The default data_dir will be deleted!
+Create your own ```data_dir``` with all your workspaces, database connections, etc. and refer to this directory in the environment ```PACKER_VAR_geoserver_data_dir```.
+This is directory will be baked into the image that all geoserver instances are started with.
 
 
 ## Terraform
