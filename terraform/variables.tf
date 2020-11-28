@@ -1,5 +1,9 @@
 variable compartment_name {}
 
+variable "vault_compartment_name" {
+  description = "The name of the compartment that holds the secrets"
+}
+
 variable "lb_shape" {
   default = "10Mbps-Micro"
 }

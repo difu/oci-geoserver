@@ -93,7 +93,7 @@ resource "oci_identity_policy" "geoserver_policy" {
     description = "Allow and deny geoserver instances access to oci resources"
     name = "policy_geoserver"
     statements = [
-      "Allow dynamic-group ${oci_identity_dynamic_group.geoserver_dynamic_group.name} to read secrets in compartment ${var.compartment_name} where target.vault.id='${var.geoserver_vault_ocid}'"
+      "Allow dynamic-group ${oci_identity_dynamic_group.geoserver_dynamic_group.name} to read secrets in compartment ${var.vault_compartment_name} where target.vault.id='${var.geoserver_vault_ocid}'"
     ]
 
     #Optional
